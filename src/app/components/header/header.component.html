@@ -1,0 +1,7 @@
+<header class="bg-blue-600 text-white p-4 flex justify-between items-center">
+  <h1 class="text-xl font-bold mx-auto">Product Manager</h1>
+  <div class="ml-4">
+    <p-menu class="mt-16" #menu [model]="menuItems" [popup]="true" />
+    <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
+  </div>
+</header>

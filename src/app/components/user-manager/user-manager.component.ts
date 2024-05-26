@@ -17,6 +17,7 @@ export class UserManagerComponent {
     private router: Router
   ) {}
   users!: User[];
+  changesDetected: boolean = true;
 
   ngOnInit() {
     const $users = this.getUsers();
@@ -28,6 +29,10 @@ export class UserManagerComponent {
   getUsers(): Observable<User[]> {
     return this.userService.getAllUsers();
   }
+
+  saveChanges() {}
+
+  onRoleChange(user: User) {}
 
   deleteUser(uid: string) {
     console.log(uid);

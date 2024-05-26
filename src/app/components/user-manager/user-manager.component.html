@@ -8,13 +8,13 @@
           (click)="goBack()"
         >
           <i class="fas fa-arrow-left"></i> Go back
-        </button></ng-template
-      >
+        </button>
+      </ng-template>
       <ng-template pTemplate="header">
         <tr>
           <th>Name</th>
           <th>Email</th>
-          <th>ROLE</th>
+          <th>Is admin</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-user>
@@ -22,7 +22,11 @@
           <td>{{ user.displayName }}</td>
           <td>{{ user.email }}</td>
           <td>
-            <input type="checkbox" [checked]="user.role === 'ADMIN'" disabled />
+            <input
+              type="checkbox"
+              [checked]="user.role === 'ADMIN'"
+              (change)="onRoleChange(user)"
+            />
           </td>
           <td>
             <button (click)="deleteUser(user.uid)">
@@ -33,5 +37,13 @@
       </ng-template>
       <ng-template pTemplate="summary"> </ng-template>
     </p-table>
+    <!-- Save Changes Button -->
+    <button
+      class="bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded mt-3"
+      [disabled]="!changesDetected"
+      (click)="saveChanges()"
+    >
+      Save Changes
+    </button>
   </div>
 </div>

@@ -32,6 +32,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ViewProductComponent } from './components/products/view-product/view-product.component';
 import { EditProductComponent } from './components/products/edit-product/edit-product.component';
 import { AddProductComponent } from './components/products/add-product/add-product.component';
+import { UserManagerComponent } from './components/user-manager/user-manager.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AddProductComponent } from './components/products/add-product/add-produ
     AddProductComponent,
     ViewProductComponent,
     EditProductComponent,
+    UserManagerComponent,
   ],
   imports: [
     ToastrModule.forRoot({

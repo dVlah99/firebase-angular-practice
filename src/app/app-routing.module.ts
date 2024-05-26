@@ -5,6 +5,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './shared/services/guardServices/auth.guard';
 import { AdminGuard } from './shared/services/guardServices/admin.guard';
+import { UserManagerComponent } from './components/user-manager/user-manager.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,7 +17,7 @@ export const routes: Routes = [
   },
   {
     path: 'user-manager',
-    component: DashboardComponent,
+    component: UserManagerComponent,
     canActivate: [AuthGuard, AdminGuard],
   },
   { path: 'register', component: RegisterComponent },

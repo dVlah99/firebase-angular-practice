@@ -27,4 +27,8 @@ export class UserService {
   getUser(userId: string): Observable<User | undefined> {
     return this.firestore.doc<User>(`users/${userId}`).valueChanges();
   }
+
+  getAllUsers(): Observable<User[]> {
+    return this.firestore.collection<User>('users').valueChanges();
+  }
 }

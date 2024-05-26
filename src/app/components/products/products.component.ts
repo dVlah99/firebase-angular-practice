@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { AddProductComponent } from './add-product/add-product.component';
 import { AuthService } from '../../shared/services/authService/auth.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-products',
@@ -18,7 +19,9 @@ export class ProductsComponent {
   constructor(
     private productService: ProductService,
     private dialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private confirmationService: ConfirmationService,
+    private toastr: ToastrService
   ) {}
   products!: Product[];
   isAdmin!: boolean;
@@ -73,8 +76,20 @@ export class ProductsComponent {
   }
 
   deleteSelectedProducts() {
-    this.selectedProductIds.forEach((id) => {
-      this.productService.deleteProduct(id);
+    this.confirmDelete();
+  }
+
+  confirmDelete() {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete the selected products?',
+      header: 'Confirm Delete',
+      icon: 'pi pi-exclamation-triangle',
+      accept: async () => {
+        this.selectedProductIds.forEach((id) => {
+          this.productService.deleteProduct(id);
+        });
+        this.toastr.success('Products succesfully deleted!', 'Success');
+      },
     });
   }
 

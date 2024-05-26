@@ -5,6 +5,7 @@ import { ProductService } from '../../../shared/services/productsService/product
 import { Product } from '../../../shared/types/product.type';
 import { ProductDialogComponent } from '../../product-dialog/product-dialog.component';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-view-product',
@@ -18,6 +19,7 @@ export class ViewProductComponent {
     private productService: ProductService,
     private toastr: ToastrService,
     private authService: AuthService,
+    private confirmationService: ConfirmationService,
     @Inject(MAT_DIALOG_DATA) public product: Product
   ) {}
   @Output() toggleEditModeOutput = new EventEmitter<boolean>();
@@ -43,8 +45,21 @@ export class ViewProductComponent {
     );
   }
 
+  confirmDelete() {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete the selected product?',
+      header: 'Confirm Delete',
+      icon: 'pi pi-exclamation-triangle',
+      accept: async () => {
+        await this.productService.deleteProduct(this.product.id);
+        this.dialogRef.close();
+        this.toastr.success('Product succesfully deleted!', 'Success');
+        this.deleteProduct();
+      },
+    });
+  }
+
   closeDialog(): void {
-    console.log('zasto ali view');
     this.dialogRef.close();
   }
 
@@ -53,8 +68,6 @@ export class ViewProductComponent {
   }
 
   async deleteProduct() {
-    this.dialogRef.close();
-    this.toastr.success('Product succesfully deleted!', 'Success');
-    await this.productService.deleteProduct(this.product.id);
+    this.confirmDelete();
   }
 }

@@ -32,6 +32,8 @@ import { ViewProductComponent } from './components/products/view-product/view-pr
 import { EditProductComponent } from './components/products/edit-product/edit-product.component';
 import { AddProductComponent } from './components/products/add-product/add-product.component';
 import { UserManagerComponent } from './components/user-manager/user-manager.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -75,8 +77,10 @@ import { UserManagerComponent } from './components/user-manager/user-manager.com
     TagModule,
     ScrollPanelModule,
     TableModule,
+    ConfirmDialogModule,
   ],
   providers: [
+    ConfirmationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

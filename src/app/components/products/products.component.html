@@ -1,3 +1,4 @@
+<p-confirmDialog></p-confirmDialog>
 <div class="card">
   <p-table [value]="products" [tableStyle]="{ 'min-width': '60rem' }">
     <ng-template pTemplate="caption">
@@ -10,7 +11,7 @@
           (onClick)="toggleDeleteMode()"
         />
         <p-button
-          icon="pi pi-minus"
+          label="Confirm delete"
           *ngIf="deleteMode"
           (onClick)="deleteSelectedProducts()"
         />

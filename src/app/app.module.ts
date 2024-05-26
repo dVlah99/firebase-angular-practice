@@ -27,7 +27,6 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ProductDialogComponent } from './components/product-dialog/product-dialog.component';
 import { TableModule } from 'primeng/table';
-
 import { ToastrModule } from 'ngx-toastr';
 import { ViewProductComponent } from './components/products/view-product/view-product.component';
 import { EditProductComponent } from './components/products/edit-product/edit-product.component';

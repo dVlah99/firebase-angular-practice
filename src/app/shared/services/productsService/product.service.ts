@@ -41,7 +41,7 @@ export class ProductService {
       );
   }
 
-  async addProduct(product: AddProductInput): Promise<void> {
+  async addProduct(product: AddProductInput): Promise<true> {
     try {
       const user = await this.fireauth.currentUser;
       if (user) {
@@ -52,22 +52,24 @@ export class ProductService {
           .doc(id)
           .set({ uid, ...product });
       }
+      return true;
     } catch (error) {
       console.error('Error adding product:', error);
       throw new Error('Failed to add product');
     }
   }
 
-  async deleteProduct(productId: string): Promise<void> {
+  async deleteProduct(productId: string): Promise<boolean> {
     try {
       await this.firestore.collection('products').doc(productId).delete();
+      return true;
     } catch (error) {
       console.error('Error deleting product:', error);
       throw new Error('Failed to delete product');
     }
   }
 
-  async editProduct(updatedProduct: EditProductInput): Promise<void> {
+  async editProduct(updatedProduct: EditProductInput): Promise<boolean> {
     try {
       const user = await this.fireauth.currentUser;
       if (user) {
@@ -78,6 +80,7 @@ export class ProductService {
           .doc(id)
           .update({ uid, ...productData });
       }
+      return true;
     } catch (error) {
       console.error('Error updating product:', error);
       throw new Error('Failed to update product');

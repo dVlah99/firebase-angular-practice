@@ -39,10 +39,4 @@ export class HeaderComponent {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
-
-  handleMenuClick(item: any) {
-    if (item.command) {
-      item.command();
-    }
-  }
 }

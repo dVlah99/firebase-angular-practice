@@ -58,7 +58,7 @@ export class AuthService {
       });
 
       this.router.navigate(['/dashboard']);
-    } catch (error: any) {
+    } catch (error) {
       if (error instanceof FirebaseError) {
         this.toastr.error(error.message, 'Error');
       }

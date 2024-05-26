@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../shared/services/authService/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -7,15 +9,25 @@ import { AuthService } from '../../shared/services/authService/auth.service';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {}
   email!: string;
   password!: string;
   displayName!: string;
   onSubmit() {
-    this.authService.register({
-      email: this.email,
-      password: this.password,
-      displayName: this.displayName,
-    });
+    try {
+      this.authService.register({
+        email: this.email,
+        password: this.password,
+        displayName: this.displayName,
+      });
+      this.router.navigate(['/login']);
+      this.toastr.success('Succesfully registered!', 'Success');
+    } catch (error) {
+      this.toastr.error('Error while registering user!', 'Error');
+    }
   }
 }

@@ -37,7 +37,6 @@ export class AddProductComponent {
       })
       .catch((error) => {
         console.error('Error adding product: ', error);
-        // Show an error message to the user
       });
   }
 

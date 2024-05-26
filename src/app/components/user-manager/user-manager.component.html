@@ -18,7 +18,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-user>
-        <tr class="hover:bg-yellow-500">
+        <tr class="hover:bg-gray-500">
           <td>{{ user.displayName }}</td>
           <td>{{ user.email }}</td>
           <td>
@@ -37,7 +37,7 @@
       </ng-template>
       <ng-template pTemplate="summary"> </ng-template>
     </p-table>
-    <!-- Save Changes Button -->
+
     <button
       class="bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded mt-3"
       [disabled]="!changesDetected"

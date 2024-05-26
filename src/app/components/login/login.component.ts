@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/services/authService/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -8,12 +9,20 @@ import { AuthService } from '../../shared/services/authService/auth.service';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private toastr: ToastrService
+  ) {}
   email: string = '';
   password: string = '';
 
   loginUser() {
-    this.authService.login({ email: this.email, password: this.password });
+    try {
+      this.authService.login({ email: this.email, password: this.password });
+    } catch (error) {
+      this.toastr.error('Error while loging in', 'Error');
+    }
   }
 
   toRegister() {

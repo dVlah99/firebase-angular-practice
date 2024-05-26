@@ -20,6 +20,8 @@ import {
 import { UserService } from '../userService/user.service';
 import { Product } from '../../types/product.type';
 import { user } from '@angular/fire/auth';
+import { ToastrService } from 'ngx-toastr';
+import { FirebaseError } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +32,8 @@ export class AuthService {
     private fireauth: AngularFireAuth,
     private firestore: AngularFirestore,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private toastr: ToastrService
   ) {
     this.user$ = this.fireauth.authState.pipe(
       switchMap((user) => {
@@ -55,9 +58,10 @@ export class AuthService {
       });
 
       this.router.navigate(['/dashboard']);
-    } catch (error) {
-      alert('LOGIN GRESKA');
-      console.log('Login error: ', error);
+    } catch (error: any) {
+      if (error instanceof FirebaseError) {
+        this.toastr.error(error.message, 'Error');
+      }
       this.router.navigate(['/login']);
     }
   }

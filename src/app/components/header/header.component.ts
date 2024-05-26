@@ -9,15 +9,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
+  canAccessUserManager!: boolean;
   menuItems = [
     {
       label: 'Manage Users',
       icon: 'pi pi-users',
       command: () => this.manageUsers(),
+      visible: this.canAccessUserManager,
     },
     { label: 'Logout', icon: 'pi pi-sign-out', command: () => this.logout() },
   ];
-  canAccessUserManager!: boolean;
   selectedItem: any;
 
   constructor(

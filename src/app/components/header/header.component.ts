@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-
 import { AuthService } from '../../shared/services/authService/auth.service';
 import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-header',
@@ -10,35 +10,34 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   canAccessUserManager!: boolean;
-  menuItems = [
-    {
-      label: 'Manage Users',
-      icon: 'pi pi-users',
-      command: () => this.manageUsers(),
-      visible: this.canAccessUserManager,
-    },
-    { label: 'Logout', icon: 'pi pi-sign-out', command: () => this.logout() },
-  ];
-  selectedItem: any;
+  menuItems: MenuItem[] = [];
 
-  constructor(
-    private authSevice: AuthService,
-    private router: Router,
-    private authService: AuthService
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   async ngOnInit() {
-    this.canAccessUserManager = await this.authService.isAdmin(
-      await this.authService.getCurrentUserId()
-    );
+    const userId = await this.authService.getCurrentUserId();
+    this.canAccessUserManager = await this.authService.isAdmin(userId);
+
+    this.menuItems = [
+      {
+        label: 'Manage Users',
+        icon: 'pi pi-users',
+        command: () => this.manageUsers(),
+        visible: this.canAccessUserManager,
+      },
+      { label: 'Logout', icon: 'pi pi-sign-out', command: () => this.logout() },
+    ];
   }
 
   manageUsers() {
-    this.router.navigate(['user-manager']);
+    if (this.canAccessUserManager) {
+      this.router.navigate(['user-manager']);
+    }
   }
 
   logout() {
-    this.authSevice.logout();
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   handleMenuClick(item: any) {

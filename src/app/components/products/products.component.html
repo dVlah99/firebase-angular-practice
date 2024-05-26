@@ -4,18 +4,43 @@
       <div class="flex align-items-center justify-content-between">
         Products
         <p-button icon="pi pi-plus" (onClick)="addProduct()" />
-        <p-button icon="pi pi-trash" />
+        <p-button
+          icon="pi pi-trash"
+          *ngIf="isAdmin"
+          (onClick)="toggleDeleteMode()"
+        />
+        <p-button
+          icon="pi pi-minus"
+          *ngIf="deleteMode"
+          (onClick)="deleteSelectedProducts()"
+        />
       </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
+        <th *ngIf="deleteMode">
+          <input type="checkbox" (change)="selectAll()" />
+          Select all
+        </th>
         <th>Name</th>
         <th>Price</th>
         <th>Description</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-product>
-      <tr (click)="getProductInfo(product)" class="hover:bg-yellow-500">
+      <tr
+        class="hover:bg-gray-300 cursor-pointer"
+        (click)="!deleteMode ? getProductInfo(product) : true"
+      >
+        <td *ngIf="deleteMode">
+          <input
+            type="checkbox"
+            *ngIf="deleteMode"
+            [checked]="isProductSelected(product.id)"
+            [(ngModel)]="product.selectedForDeletion"
+            (click)="toggleProductIdSelection(product.id)"
+          />
+        </td>
         <td>{{ product.name }}</td>
         <td>{{ product.price | currency : "USD" }}</td>
         <td>{{ product.description }}</td>

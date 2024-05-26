@@ -5,6 +5,9 @@ import { ProductService } from '../../shared/services/productsService/product.se
 import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
+import { ToastrService } from 'ngx-toastr';
+import { AddProductComponent } from './add-product/add-product.component';
+
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -16,7 +19,6 @@ export class ProductsComponent {
     private dialog: MatDialog
   ) {}
   products!: Product[];
-  isProductSelected: boolean = false;
 
   ngOnInit() {
     const $products = this.getProducts();
@@ -25,17 +27,19 @@ export class ProductsComponent {
     });
   }
 
+  addProduct() {
+    this.dialog.open(AddProductComponent);
+  }
+
   getProductInfo(product: Product) {
-    /*     const dialogRef = this.dialog.open(ProductDialogComponent, {
-      width: '400px',
+    const dialogRef = this.dialog.open(ProductDialogComponent, {
       data: product,
     });
-    this.isProductSelected = true;
+
     dialogRef.afterClosed().subscribe((result) => {
       console.log('Dialog closed with result:', result);
-      this.isProductSelected = false;
-    }); */
-    console.log('anaaal');
+    });
+    //this.toastr.success('too', 'bravo');
   }
 
   getProducts(): Observable<Product[]> {

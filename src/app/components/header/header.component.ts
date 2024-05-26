@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+
 import { AuthService } from '../../shared/services/authService/auth.service';
 import { Router } from '@angular/router';
 
@@ -17,14 +17,20 @@ export class HeaderComponent {
     },
     { label: 'Logout', icon: 'pi pi-sign-out', command: () => this.logout() },
   ];
-
+  canAccessUserManager!: boolean;
   selectedItem: any;
 
   constructor(
     private authSevice: AuthService,
-    private firestore: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
+
+  async ngOnInit() {
+    this.canAccessUserManager = await this.authService.isAdmin(
+      await this.authService.getCurrentUserId()
+    );
+  }
 
   manageUsers() {
     this.router.navigate(['user-manager']);

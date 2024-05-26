@@ -1,0 +1,52 @@
+<div
+  class="relative bg-white p-8 rounded-lg shadow-md w-full max-w-lg"
+  (click)="$event.stopPropagation()"
+>
+  <div class="flex justify-between items-center mb-4">
+    <button
+      type="button"
+      class="p-2 text-gray-500 hover:text-gray-700"
+      (click)="closeDialog()"
+    >
+      <span class="pi pi-times"></span>
+    </button>
+    <h2 class="text-2xl font-bold mb-6 text-center">Product information</h2>
+    <div class="relative" *ngIf="canModifyProduct">
+      <p-button
+        (click)="menu.toggle($event)"
+        icon="pi pi-ellipsis-v"
+      ></p-button>
+      <p-menu
+        #menu
+        [model]="menuItems"
+        [popup]="true"
+        appendTo=".relative"
+      ></p-menu>
+    </div>
+  </div>
+
+  <div class="mb-6">
+    <label for="productName" class="block text-gray-700 text-sm font-bold mb-2"
+      >Product Name:</label
+    >
+    <p class="py-2 px-3 text-gray-700 leading-tight">{{ product.name }}</p>
+  </div>
+
+  <div class="mb-6">
+    <label for="price" class="block text-gray-700 text-sm font-bold mb-2"
+      >Price:</label
+    >
+    <p class="py-2 px-3 text-gray-700 leading-tight">
+      {{ product.price | currency }}
+    </p>
+  </div>
+
+  <div class="mb-6">
+    <label for="description" class="block text-gray-700 text-sm font-bold mb-2"
+      >Description:</label
+    >
+    <p class="py-2 px-3 text-gray-700 leading-tight">
+      {{ product.description }}
+    </p>
+  </div>
+</div>

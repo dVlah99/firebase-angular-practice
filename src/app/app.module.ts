@@ -28,6 +28,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { ProductDialogComponent } from './components/product-dialog/product-dialog.component';
 import { TableModule } from 'primeng/table';
 
+import { ToastrModule } from 'ngx-toastr';
+import { ViewProductComponent } from './components/products/view-product/view-product.component';
+import { EditProductComponent } from './components/products/edit-product/edit-product.component';
+import { AddProductComponent } from './components/products/add-product/add-product.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,8 +42,21 @@ import { TableModule } from 'primeng/table';
     ProductsComponent,
     HeaderComponent,
     ProductDialogComponent,
+    AddProductComponent,
+    ViewProductComponent,
+    EditProductComponent,
   ],
   imports: [
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      countDuplicates: true,
+      resetTimeoutOnDuplicate: true,
+      enableHtml: true,
+      progressBar: true,
+      closeButton: true,
+      timeOut: 5000,
+    }),
     BrowserModule,
     AppRoutingModule,
     FormsModule,

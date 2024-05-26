@@ -3,7 +3,8 @@
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
         Products
-        <p-button icon="pi pi-plus" />
+        <p-button icon="pi pi-plus" (onClick)="addProduct()" />
+        <p-button icon="pi pi-trash" />
       </div>
     </ng-template>
     <ng-template pTemplate="header">

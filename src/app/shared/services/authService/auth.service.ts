@@ -8,8 +8,18 @@ import {
   RegisteUserInput,
 } from '../../types/user.type';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable, switchMap, of, BehaviorSubject } from 'rxjs';
+import {
+  Observable,
+  switchMap,
+  of,
+  BehaviorSubject,
+  catchError,
+  map,
+  throwError,
+} from 'rxjs';
 import { UserService } from '../userService/user.service';
+import { Product } from '../../types/product.type';
+import { user } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -88,5 +98,79 @@ export class AuthService {
     } else {
       return null;
     }
+  }
+
+  async checkUserPermissions(product: Product): Promise<boolean> {
+    try {
+      const user = await this.fireauth.currentUser;
+      if (user) {
+        const isAdmin = await this.isAdmin(user.uid);
+
+        if (isAdmin) {
+          return true;
+        }
+
+        if (user.uid === product.uid) {
+          return true;
+        }
+
+        return false;
+      } else {
+        console.error('No user logged in');
+        throw new Error('No user logged in');
+      }
+    } catch (error) {
+      throw new Error('Error');
+    }
+  }
+
+  async isAdmin(userId: string): Promise<boolean> {
+    const role$ = this.getUserById(userId);
+    const isAdmin: boolean = await new Promise((resolve, reject) => {
+      role$.subscribe(
+        (data) => {
+          if (data.role === userRoles.ADMIN) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+
+    return isAdmin;
+  }
+
+  async getCurrentUserId(): Promise<string> {
+    const uid = (await this.fireauth.currentUser)?.uid;
+    if (uid) {
+      return uid;
+    }
+    throw Error('User error');
+  }
+
+  getUserById(userId: string): Observable<User> {
+    return this.firestore
+      .collection('users')
+      .doc(userId)
+      .snapshotChanges()
+      .pipe(
+        map((action) => {
+          if (!action.payload.exists) {
+            throw new Error('User not found');
+          }
+
+          const data = action.payload.data() as User;
+          const id = action.payload.id;
+          return { id, ...data };
+        }),
+        catchError((error) => {
+          console.error('Error fetching user:', error);
+          return throwError(() => new Error('Failed to fetch user'));
+        })
+      );
   }
 }

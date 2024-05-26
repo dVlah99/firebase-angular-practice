@@ -17,6 +17,11 @@ export class RegisterComponent {
   email!: string;
   password!: string;
   displayName!: string;
+
+  returnToLogin() {
+    this.router.navigate(['login']);
+  }
+
   onSubmit() {
     try {
       this.authService.register({

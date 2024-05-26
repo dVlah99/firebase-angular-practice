@@ -25,10 +25,11 @@ export class ProductsComponent {
   ) {}
   products!: Product[];
   isAdmin!: boolean;
-  deleteMode: boolean = false;
+  deleteMode!: boolean;
   selectedProductIds: string[] = [];
 
   async ngOnInit() {
+    this.deleteMode = false;
     const $products = this.getProducts();
     $products.subscribe((products) => {
       this.products = [...products];

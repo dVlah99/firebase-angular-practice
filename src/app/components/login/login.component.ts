@@ -28,4 +28,8 @@ export class LoginComponent {
   toRegister() {
     this.router.navigate(['/register']);
   }
+
+  forgotPassword(email: string) {
+    this.router.navigate(['reset-password']);
+  }
 }

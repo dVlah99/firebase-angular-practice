@@ -95,6 +95,10 @@ export class AuthService {
     }
   }
 
+  resetPassword(email: string): Promise<void> {
+    return this.fireauth.sendPasswordResetEmail(email);
+  }
+
   async getAuthToken(): Promise<string | null> {
     const user = await this.fireauth.currentUser;
     if (user) {

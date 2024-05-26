@@ -6,6 +6,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './shared/services/guardServices/auth.guard';
 import { AdminGuard } from './shared/services/guardServices/admin.guard';
 import { UserManagerComponent } from './components/user-manager/user-manager.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,6 +22,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard, AdminGuard],
   },
   { path: 'register', component: RegisterComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
 ];
 
 @NgModule({

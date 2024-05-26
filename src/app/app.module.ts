@@ -10,7 +10,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MenubarModule } from 'primeng/menubar';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './shared/services/guardServices/auth.interceptor';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
@@ -34,6 +34,7 @@ import { AddProductComponent } from './components/products/add-product/add-produ
 import { UserManagerComponent } from './components/user-manager/user-manager.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ConfirmationService } from 'primeng/api';
     ViewProductComponent,
     EditProductComponent,
     UserManagerComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     ToastrModule.forRoot({
@@ -78,6 +80,7 @@ import { ConfirmationService } from 'primeng/api';
     ScrollPanelModule,
     TableModule,
     ConfirmDialogModule,
+    ReactiveFormsModule,
   ],
   providers: [
     ConfirmationService,

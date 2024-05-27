@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { UserService } from '../../shared/services/userService/user.service';
 import { User } from '../../shared/types/user.type';
 import { Router } from '@angular/router';
+import { AdminManagerComponent } from './admin-manager/admin-manager.component';
 
 @Component({
   selector: 'app-user-manager',
@@ -32,7 +33,7 @@ export class UserManagerComponent {
 
   saveChanges() {}
 
-  onRoleChange(user: User) {}
+  addAdmin() {}
 
   deleteUser(uid: string) {
     console.log(uid);
@@ -40,5 +41,9 @@ export class UserManagerComponent {
 
   goBack() {
     this.router.navigate(['dashboard']);
+  }
+
+  openAdminManager() {
+    this.dialog.open(AdminManagerComponent);
   }
 }

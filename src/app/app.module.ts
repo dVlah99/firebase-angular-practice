@@ -35,6 +35,7 @@ import { UserManagerComponent } from './components/user-manager/user-manager.com
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { AdminManagerComponent } from './components/user-manager/admin-manager/admin-manager.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     EditProductComponent,
     UserManagerComponent,
     ResetPasswordComponent,
+    AdminManagerComponent,
   ],
   imports: [
     ToastrModule.forRoot({

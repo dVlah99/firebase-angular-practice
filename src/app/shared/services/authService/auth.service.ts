@@ -7,21 +7,17 @@ import {
   userRoles,
   RegisteUserInput,
 } from '../../types/user.type';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import {
-  Observable,
-  switchMap,
-  of,
-  BehaviorSubject,
-  catchError,
-  map,
-  throwError,
-} from 'rxjs';
+  AngularFirestore,
+  QueryDocumentSnapshot,
+} from '@angular/fire/compat/firestore';
+import { Observable, switchMap, of, catchError, map, throwError } from 'rxjs';
 import { UserService } from '../userService/user.service';
 import { Product } from '../../types/product.type';
-import { user } from '@angular/fire/auth';
+
 import { ToastrService } from 'ngx-toastr';
 import { FirebaseError } from 'firebase/app';
+import { user } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -158,6 +154,34 @@ export class AuthService {
       return uid;
     }
     throw Error('User error');
+  }
+
+  async searchUserByEmail(
+    email: string
+  ): Promise<{ user: User; documentId: string }> {
+    try {
+      const querySnapshot = await this.firestore
+        .collection('users', (ref) => ref.where('email', '==', email))
+        .get()
+        .toPromise();
+      if (querySnapshot?.empty) {
+        throw new Error('User not found');
+      } else {
+        const userDoc: QueryDocumentSnapshot<User> = querySnapshot
+          ?.docs[0] as QueryDocumentSnapshot<User>;
+
+        const userData = userDoc.data();
+        const docId = userDoc.id;
+        return { user: userData, documentId: docId };
+      }
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        this.toastr.error(error.message, 'Error');
+        throw error;
+      }
+      this.toastr.error('User not found', 'Error');
+      throw error;
+    }
   }
 
   getUserById(userId: string): Observable<User> {

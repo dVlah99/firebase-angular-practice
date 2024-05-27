@@ -1,0 +1,41 @@
+<div class="flex items-center justify-center bg-gray-100">
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-center">Add a new admin</h2>
+    <form #adminForm="ngForm">
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700"
+          >Email</label
+        >
+        <input
+          id="email"
+          type="email"
+          pInputText
+          class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          [(ngModel)]="email"
+          name="email"
+          #emailInput="ngModel"
+          required
+          email
+        />
+        <div
+          *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
+          class="text-red-600 text-sm"
+        >
+          <div *ngIf="emailInput.errors?.['required']">Email is required.</div>
+          <div *ngIf="emailInput.errors?.['email']">Invalid email format.</div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <button
+          pButton
+          type="button"
+          label="Register"
+          (click)="addAdmin()"
+          [disabled]="adminForm.invalid"
+          class="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700 ml-2"
+        ></button>
+      </div>
+    </form>
+  </div>
+</div>

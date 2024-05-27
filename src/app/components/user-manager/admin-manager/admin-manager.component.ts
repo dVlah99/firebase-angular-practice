@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AdminService } from '../../../shared/services/userService/admin.service';
 import { FirebaseError } from 'firebase/app';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-admin-manager',
@@ -12,7 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 export class AdminManagerComponent {
   constructor(
     private adminService: AdminService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dialogRef: MatDialogRef<AdminManagerComponent>
   ) {}
   email!: string;
 
@@ -27,5 +29,9 @@ export class AdminManagerComponent {
       }
       throw error;
     }
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 }

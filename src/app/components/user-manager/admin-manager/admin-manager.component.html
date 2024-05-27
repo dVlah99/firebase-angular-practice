@@ -2,6 +2,13 @@
   <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
     <h2 class="text-2xl font-bold mb-6 text-center">Add a new admin</h2>
     <form #adminForm="ngForm">
+      <button
+        type="button"
+        class="absolute top-2 right-2 p-2 text-gray-500 hover:text-gray-700"
+        (click)="closeDialog()"
+      >
+        <span class="pi pi-times"></span>
+      </button>
       <div class="mb-4">
         <label for="email" class="block text-sm font-medium text-gray-700"
           >Email</label
